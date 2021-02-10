@@ -6,7 +6,7 @@ const LikedPokemonsButton: React.FC = () => {
   let history = useHistory();
 
   const handleClick = () => {
-    history.push("/favorites");
+    history.push("/Pokedex/favorites");
   };
   return (
     <button className="liked-pokemons-button" onClick={handleClick}>

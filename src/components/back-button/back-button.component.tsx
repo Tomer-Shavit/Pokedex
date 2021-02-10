@@ -7,7 +7,7 @@ const BackButton: FC = () => {
   let history = useHistory();
 
   const handleClick = () => {
-    history.push("/");
+    history.push("/Pokedex");
   };
   return (
     <button className="back-button" onClick={handleClick}>

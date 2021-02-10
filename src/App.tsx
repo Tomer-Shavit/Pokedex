@@ -13,8 +13,12 @@ const App: React.FC = () => {
         <BrowserRouter>
           <NavBar />
           <Switch>
-            <Route path="/" exact component={Homepage}></Route>
-            <Route path="/favorites" exact component={Favorites}></Route>
+            <Route path="/Pokedex" exact component={Homepage}></Route>
+            <Route
+              path="/Pokedex/favorites"
+              exact
+              component={Favorites}
+            ></Route>
           </Switch>
         </BrowserRouter>
       </UserProvider>
