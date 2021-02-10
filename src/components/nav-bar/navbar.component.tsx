@@ -7,7 +7,7 @@ const NavBar: React.FC = () => {
   return (
     <div className="navbar">
       <div className="logo-container">
-        <Link to="/">
+        <Link to="/Pokedex">
           <Logo className="logo" />
         </Link>
       </div>
