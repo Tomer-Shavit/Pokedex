@@ -27,3 +27,21 @@
     font-size: 28px;
   }
 }
+
+@media (hover: none) {
+  .scroll-top-button {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .scroll-top-button:focus {
+    outline: 0;
+  }
+  .scroll-top-button:hover {
+    background-image: linear-gradient(to bottom, #ff512f 0%, #dd2476 100%);
+    color: white;
+  }
+}

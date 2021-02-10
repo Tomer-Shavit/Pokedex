@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 
 import { Waypoint } from "react-waypoint";
-
 import { debounce } from "lodash";
 
 import Spinner from "../spinner/spinner.component";
 import PokemonCard from "../pokemon-card/pokemon-card.component";
-
-import "./cards-overview.styles.scss";
 import fetchPokemons from "../../utils/fetchPokemons";
 import { UserContext } from "../../context/UserContext";
 import { useCallback } from "react";
@@ -15,6 +12,11 @@ import fetchPokemon from "../../utils/fetchPokemon";
 import { Pokemon } from "../../types";
 import LikedPokemonsButton from "../liked-pokemons-button/liked-pokemons-button.component";
 import ScrollToTopButton from "../scroll-top-button/scroll-top-button.component";
+import { checkIfExists } from "../../utils/checkIfExists";
+
+import "./cards-overview.styles.scss";
+import ditto from "../../assets/ditto.png";
+import MissingPokemons from "../missing-pokemons/missing-pokemons.component";
 
 interface Props {
   search: string | null;
@@ -43,14 +45,21 @@ const CardsOverview: React.FC<Props> = ({ search }) => {
 
   useEffect(() => debouncedText(search), [debouncedText, search]);
 
+  // fetch the searched pokemon when user types a name
   useEffect(() => {
     if (pokemonSearch) {
-      fetchPokemon(
-        `https://pokeapi.co/api/v2/pokemon/${pokemonSearch}`
-      ).then((res) => setSelectedPokemon(res));
+      const isPokemon = checkIfExists(fetchedPokemons, pokemonSearch);
+      if (isPokemon) {
+        setSelectedPokemon(isPokemon);
+      } else {
+        fetchPokemon(
+          `https://pokeapi.co/api/v2/pokemon/${pokemonSearch}`
+        ).then((res) => setSelectedPokemon(res));
+      }
     }
-  }, [pokemonSearch]);
+  }, [pokemonSearch, fetchedPokemons]);
 
+  // Fetches Pokemons and add them to the context pokemon array
   useEffect(() => {
     fetchPokemons(pokemonApi).then((pokemonsArr) => {
       if (
@@ -62,6 +71,7 @@ const CardsOverview: React.FC<Props> = ({ search }) => {
     });
   }, [pokemonApi, fetchedPokemons, addFetchedPokemons]);
 
+  // render the right component
   if (fetchedPokemons.length && !pokemonSearch) {
     body = fetchedPokemons.map((pokemon, i) => (
       <div className="card-container" key={pokemon.id}>
@@ -73,7 +83,12 @@ const CardsOverview: React.FC<Props> = ({ search }) => {
     ));
   } else if (selectedPokemon) {
     if (typeof selectedPokemon === "string") {
-      body = <div>{selectedPokemon}</div>;
+      body = (
+        <MissingPokemons
+          img={ditto}
+          text={`No pokemons with the name "${pokemonSearch}" were found, try again`}
+        ></MissingPokemons>
+      );
     } else {
       body = <PokemonCard pokemon={selectedPokemon}></PokemonCard>;
     }

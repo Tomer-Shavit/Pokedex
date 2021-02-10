@@ -1,0 +1,21 @@
+.missing-pokemons {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .img-container {
+    width: 280px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  .missing-text {
+    margin-top: 8px;
+    font-size: 2rem;
+  }
+}
