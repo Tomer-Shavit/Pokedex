@@ -1,0 +1,11 @@
+.input-box {
+  margin-top: 16px;
+  padding: 8px;
+  border: 1px solid #c1c3c5;
+  border-radius: 15px;
+  min-width: 420px;
+
+  &:focus {
+    outline: none;
+  }
+}
